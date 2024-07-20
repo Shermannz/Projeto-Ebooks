@@ -14,6 +14,7 @@ import com.example.ebooks.entities.User;
 import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.OrderRepository;
 import com.example.ebooks.repositories.UserRepository;
+import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
 
 @Service
 public class OrderService {
@@ -26,7 +27,8 @@ public class OrderService {
 
     @Transactional(readOnly = true)
     public OrderDto findById(Long id) {
-        return new OrderDto(repository.findById(id).get());
+        return new OrderDto(
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
     }
 
     @Transactional(readOnly = true)
@@ -50,9 +52,14 @@ public class OrderService {
 
     @Transactional
     public OrderDto update(Long id, OrderDto dto) {
-        Order order = repository.findByIdCustom(id);
+        Order order = repository.findByIdCustom(id).orElseThrow(() -> new EntityNotFoundEbooks("Order não encontrada"));
         order.setStatus("Pago");
         order.pago();
         return new OrderDto(repository.save(order));
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        repository.deleteById(id);
     }
 }

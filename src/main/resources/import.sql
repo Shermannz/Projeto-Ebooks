@@ -41,3 +41,9 @@ INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (2L, 2L);
 INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (2L, 3L);
 INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (3L, 3L);
 
+INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (1L, 1L);
+INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (1L, 2L);
+INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (2L, 2L);
+INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (3L, 2L);
+INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (3L, 3L);
+

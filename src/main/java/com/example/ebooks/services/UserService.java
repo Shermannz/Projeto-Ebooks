@@ -12,6 +12,9 @@ import com.example.ebooks.entities.User;
 import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.RoleRepository;
 import com.example.ebooks.repositories.UserRepository;
+import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UserService {
@@ -24,7 +27,8 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserDto findById(Long id) {
-        return new UserDto(repository.findById(id).get());
+        return new UserDto(
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
     }
 
     @Transactional(readOnly = true)
@@ -55,17 +59,21 @@ public class UserService {
 
     @Transactional
     public UserDto update(Long id, UserDto dto) {
-        User user = repository.findById(id).get();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setCellPhone(dto.getCellPhone());
-        user.setCellPhone(dto.getCellPhone());
+        try {
+            User user = repository.findById(id).get();
+            user.setName(dto.getName());
+            user.setEmail(dto.getEmail());
+            user.setPassword(dto.getPassword());
+            user.setCellPhone(dto.getCellPhone());
+            user.setCellPhone(dto.getCellPhone());
 
-        for (String string : dto.getRoles()) {
-            user.getRoles().add(roleRepository.findByAuthority(string));
+            for (String string : dto.getRoles()) {
+                user.getRoles().add(roleRepository.findByAuthority(string));
+            }
+            return new UserDto(repository.save(user));
+        } catch (EntityNotFoundException e) {
+            throw new EntityNotFoundEbooks("Usuario não encontrado");
         }
-        return new UserDto(repository.save(user));
     }
 
     @Transactional

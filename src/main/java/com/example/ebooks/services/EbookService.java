@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ebooks.dto.EbookDto;
 import com.example.ebooks.entities.Ebook;
 import com.example.ebooks.repositories.EbookRepository;
+import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
 
 @Service
 public class EbookService {
@@ -18,7 +19,8 @@ public class EbookService {
 
     @Transactional(readOnly = true)
     public EbookDto findById(Long id) {
-        return new EbookDto(repository.findById(id).orElseThrow(() -> new RuntimeException("oi")));
+        return new EbookDto(
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
     }
 
     @Transactional(readOnly = true)
@@ -38,7 +40,7 @@ public class EbookService {
 
     @Transactional
     public EbookDto update(Long id, EbookDto dto) {
-        Ebook ebook = repository.findById(id).get();
+        Ebook ebook = repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado"));
         ebook.setName(dto.getName());
         ebook.setPrice(dto.getPrice());
         ebook.setAuthor(dto.getAuthor());

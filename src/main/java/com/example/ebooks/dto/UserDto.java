@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.example.ebooks.entities.User;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -16,12 +17,16 @@ import lombok.ToString;
 @Getter
 public class UserDto {
     private Long id;
+    @NotBlank(message = "O nome não pode ser vazio")
     private String name;
+    @NotBlank(message = "O email não pode ser vazio")
     private String email;
+    @NotBlank(message = "O telefone não pode ser vazio")
     private String cellPhone;
+    @NotBlank(message = "A senha não pode ser vazia")
     private String password;
     private List<String> roles = new ArrayList<>();
-    //private Set<RoleDto> roles = new HashSet<>();
+    // private Set<RoleDto> roles = new HashSet<>();
     private Set<EbookDto> ebooks = new HashSet<>();
 
     public UserDto(Long id, String name, String email, String cellPhone, String password) {
@@ -39,8 +44,8 @@ public class UserDto {
         this.cellPhone = user.getCellPhone();
         this.password = user.getPassword();
         user.getRoles().forEach(x -> roles.add(x.getAuthority()));
-        
-        //user.getRoles().forEach(x -> roles.add(new RoleDto(x)));
+
+        // user.getRoles().forEach(x -> roles.add(new RoleDto(x)));
         user.getEbooks().forEach(x -> ebooks.add(new EbookDto(x)));
     }
 
