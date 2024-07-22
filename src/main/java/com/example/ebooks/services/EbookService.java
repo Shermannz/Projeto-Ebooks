@@ -20,7 +20,7 @@ public class EbookService {
     @Transactional(readOnly = true)
     public EbookDto findById(Long id) {
         return new EbookDto(
-                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks()));
     }
 
     @Transactional(readOnly = true)
@@ -40,7 +40,7 @@ public class EbookService {
 
     @Transactional
     public EbookDto update(Long id, EbookDto dto) {
-        Ebook ebook = repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado"));
+        Ebook ebook = repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks());
         ebook.setName(dto.getName());
         ebook.setPrice(dto.getPrice());
         ebook.setAuthor(dto.getAuthor());
