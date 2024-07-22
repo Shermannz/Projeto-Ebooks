@@ -28,7 +28,7 @@ public class OrderService {
     @Transactional(readOnly = true)
     public OrderDto findById(Long id) {
         return new OrderDto(
-                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks()));
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +52,7 @@ public class OrderService {
 
     @Transactional
     public OrderDto update(Long id, OrderDto dto) {
-        Order order = repository.findByIdCustom(id).orElseThrow(() -> new EntityNotFoundEbooks("Order não encontrada"));
+        Order order = repository.findByIdCustom(id).orElseThrow(() -> new EntityNotFoundEbooks());
         order.setStatus("Pago");
         order.pago();
         return new OrderDto(repository.save(order));

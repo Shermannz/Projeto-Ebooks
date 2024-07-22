@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ebooks.dto.EbookDto;
 import com.example.ebooks.dto.UserDto;
 import com.example.ebooks.entities.User;
-import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.RoleRepository;
 import com.example.ebooks.repositories.UserRepository;
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
@@ -21,14 +19,12 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     @Autowired
-    private EbookRepository ebookRepository;
-    @Autowired
     private RoleRepository roleRepository;
 
     @Transactional(readOnly = true)
     public UserDto findById(Long id) {
         return new UserDto(
-                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks("Usuario não encontrado")));
+                repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks()));
     }
 
     @Transactional(readOnly = true)
@@ -40,19 +36,7 @@ public class UserService {
     @Transactional
     public UserDto insert(UserDto dto) {
         User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setCellPhone(dto.getCellPhone());
-        user.setCellPhone(dto.getCellPhone());
-
-        for (EbookDto ebookDto : dto.getEbooks()) {
-            user.getEbooks().add(ebookRepository.getReferenceById(ebookDto.getId()));
-        }
-
-        for (String string : dto.getRoles()) {
-            user.getRoles().add(roleRepository.findByAuthority(string));
-        }
+        auxiliar(user, dto);
 
         return new UserDto(repository.save(user));
     }
@@ -61,18 +45,23 @@ public class UserService {
     public UserDto update(Long id, UserDto dto) {
         try {
             User user = repository.findById(id).get();
-            user.setName(dto.getName());
-            user.setEmail(dto.getEmail());
-            user.setPassword(dto.getPassword());
-            user.setCellPhone(dto.getCellPhone());
-            user.setCellPhone(dto.getCellPhone());
-
-            for (String string : dto.getRoles()) {
-                user.getRoles().add(roleRepository.findByAuthority(string));
-            }
+            auxiliar(user, dto);
             return new UserDto(repository.save(user));
+
         } catch (EntityNotFoundException e) {
-            throw new EntityNotFoundEbooks("Usuario não encontrado");
+            throw new EntityNotFoundEbooks();
+        }
+    }
+
+    private void auxiliar(User user, UserDto dto) {
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setCellPhone(dto.getCellPhone());
+        user.setCellPhone(dto.getCellPhone());
+
+        for (String string : dto.getRoles()) {
+            user.getRoles().add(roleRepository.findByAuthority(string));
         }
     }
 
