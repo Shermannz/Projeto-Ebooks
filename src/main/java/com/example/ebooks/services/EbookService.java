@@ -32,19 +32,21 @@ public class EbookService {
     @Transactional
     public EbookDto insert(EbookDto dto) {
         Ebook ebook = new Ebook();
-        ebook.setName(dto.getName());
-        ebook.setPrice(dto.getPrice());
-        ebook.setAuthor(dto.getAuthor());
+        auxiliar(ebook, dto);
         return new EbookDto(repository.save(ebook));
     }
 
     @Transactional
     public EbookDto update(Long id, EbookDto dto) {
         Ebook ebook = repository.findById(id).orElseThrow(() -> new EntityNotFoundEbooks());
+        auxiliar(ebook, dto);
+        return new EbookDto(repository.save(ebook));
+    }
+
+    private void auxiliar(Ebook ebook, EbookDto dto) {
         ebook.setName(dto.getName());
         ebook.setPrice(dto.getPrice());
         ebook.setAuthor(dto.getAuthor());
-        return new EbookDto(repository.save(ebook));
     }
 
     @Transactional

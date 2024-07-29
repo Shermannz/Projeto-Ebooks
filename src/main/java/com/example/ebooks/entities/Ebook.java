@@ -1,8 +1,8 @@
 package com.example.ebooks.entities;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,10 +32,10 @@ public class Ebook {
     private BigDecimal price;
 
     @ManyToMany(mappedBy = "ebooks")
-    private List<User> users = new ArrayList<>();
+    private Set<User> users = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "tb_ebook_category", joinColumns = @JoinColumn(name = "ebook_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories = new ArrayList<>();
+    private Set<Category> categories = new HashSet<>();
 
 }

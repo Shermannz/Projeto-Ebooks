@@ -29,7 +29,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserDto> findAll() {
-        List<User> user = repository.findAllUsers();
+        List<User> user = repository.findAll();
         return user.stream().map(UserDto::new).toList();
     }
 

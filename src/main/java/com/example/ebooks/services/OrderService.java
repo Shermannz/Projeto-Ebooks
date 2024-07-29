@@ -41,8 +41,10 @@ public class OrderService {
     public OrderDto insert(OrderDto dto) {
         Order order = new Order();
         order.setDate(dto.getDate());
+
         User user = userRepository.getReferenceById(dto.getUser().getId());
         order.setUser(user);
+
         for (EbookDto ebookDto : dto.getEbooks()) {
             Ebook ebook = ebookRepository.getReferenceById(ebookDto.getId());
             order.getEbooks().add(ebook);
