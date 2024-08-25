@@ -38,8 +38,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<OrderDto> update(@PathVariable Long id, @RequestBody @Valid OrderDto dto) {
-        return ResponseEntity.ok(service.update(id, dto));
+    ResponseEntity<OrderDto> updateToPaid(@PathVariable Long id) {
+        return ResponseEntity.ok(service.updateToPaid(id));
     }
 
     @DeleteMapping("/{id}")

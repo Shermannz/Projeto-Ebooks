@@ -3,8 +3,10 @@ package com.example.ebooks.entities;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.example.ebooks.entities.enums.Status;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime date = LocalDateTime.now();
-    private String status = "Pendente";
+    private Status status = Status.PENDENTE;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -35,9 +37,9 @@ public class Order {
 
     @ManyToMany
     @JoinTable(name = "tb_order_ebook", joinColumns = @JoinColumn(name = "order_id"), inverseJoinColumns = @JoinColumn(name = "ebook_id"))
-    private List<Ebook> ebooks = new ArrayList<>();
+    private Set<Ebook> ebooks = new HashSet<>();
 
-    public Order(Long id, LocalDateTime date, String status, User user) {
+    public Order(Long id, LocalDateTime date, Status status, User user) {
         this.id = id;
         this.date = date;
         this.status = status;
@@ -45,11 +47,13 @@ public class Order {
     }
 
     public void pago() {
-        if (status.equalsIgnoreCase("Pago") && !ebooks.isEmpty()) {
+        if (status.equals(Status.PAGO) && !ebooks.isEmpty() && user.getBalance().compareTo(subTotal()) >= 0) {
+            user.saque(subTotal());
             for (Ebook ebook : ebooks) {
                 user.getEbooks().add(ebook);
             }
-        }
+        } else
+            throw new RuntimeException();
     }
 
     public BigDecimal subTotal() {

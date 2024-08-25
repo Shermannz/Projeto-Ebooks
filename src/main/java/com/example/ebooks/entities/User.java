@@ -1,5 +1,6 @@
 package com.example.ebooks.entities;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,12 +12,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "tb_user")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class User {
     @Id
@@ -24,13 +27,15 @@ public class User {
     private Long id;
     private String name;
     private String email;
+    private BigDecimal balance;
     private String cellPhone;
     private String password;
 
-    public User(Long id, String name, String email, String cellPhone, String password) {
+    public User(Long id, String name, String email, BigDecimal balance, String cellPhone, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.balance = balance;
         this.cellPhone = cellPhone;
         this.password = password;
     }
@@ -42,5 +47,8 @@ public class User {
     @JoinTable(name = "tb_user_ebook", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ebook_id"))
     private Set<Ebook> ebooks = new HashSet<>();
 
-    
+    public void saque(BigDecimal balance) {
+        this.balance = this.balance.subtract(balance);
+    }
+
 }

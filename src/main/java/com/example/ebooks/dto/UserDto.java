@@ -1,13 +1,13 @@
 package com.example.ebooks.dto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import com.example.ebooks.entities.Ebook;
+import com.example.ebooks.entities.Role;
 import com.example.ebooks.entities.User;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -17,22 +17,20 @@ import lombok.ToString;
 @Getter
 public class UserDto {
     private Long id;
-    @NotBlank(message = "O nome não pode ser vazio")
     private String name;
-    @NotBlank(message = "O email não pode ser vazio")
     private String email;
-    @NotBlank(message = "O telefone não pode ser vazio")
     private String cellPhone;
-    @NotBlank(message = "A senha não pode ser vazia")
+    private BigDecimal balance;
     private String password;
     private List<String> roles = new ArrayList<>();
     // private Set<RoleDto> roles = new HashSet<>();
-    private Set<EbookDto> ebooks = new HashSet<>();
+    private List<EbookDto> ebooks = new ArrayList<>();
 
-    public UserDto(Long id, String name, String email, String cellPhone, String password) {
+    public UserDto(Long id, String name, String email, BigDecimal balance, String cellPhone, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.balance = balance;
         this.cellPhone = cellPhone;
         this.password = password;
     }
@@ -41,12 +39,19 @@ public class UserDto {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
+        this.balance = user.getBalance();
         this.cellPhone = user.getCellPhone();
         this.password = user.getPassword();
-        user.getRoles().forEach(x -> roles.add(x.getAuthority()));
-
-        // user.getRoles().forEach(x -> roles.add(new RoleDto(x)));
-        user.getEbooks().forEach(x -> ebooks.add(new EbookDto(x)));
+        
+        
+        for (Role role : user.getRoles()) {
+            roles.add(role.getAuthority());
+        }
+    
+        // Certifique-se de que o Set está corretamente sendo iterado e convertido para DTOs
+        for (Ebook ebook : user.getEbooks()) {
+            ebooks.add(new EbookDto(ebook));
+        }
     }
 
     public void setId(Long id) {
@@ -59,6 +64,10 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setBalance(BigDecimal saldo) {
+        this.balance = saldo;
     }
 
     public void setCellPhone(String cellPhone) {

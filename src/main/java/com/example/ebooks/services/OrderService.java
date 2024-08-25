@@ -11,6 +11,7 @@ import com.example.ebooks.dto.OrderDto;
 import com.example.ebooks.entities.Ebook;
 import com.example.ebooks.entities.Order;
 import com.example.ebooks.entities.User;
+import com.example.ebooks.entities.enums.Status;
 import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.OrderRepository;
 import com.example.ebooks.repositories.UserRepository;
@@ -53,9 +54,9 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDto update(Long id, OrderDto dto) {
+    public OrderDto updateToPaid(Long id) {
         Order order = repository.findByIdCustom(id).orElseThrow(() -> new EntityNotFoundEbooks());
-        order.setStatus("Pago");
+        order.setStatus(Status.PAGO);
         order.pago();
         return new OrderDto(repository.save(order));
     }

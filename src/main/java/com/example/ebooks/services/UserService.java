@@ -57,7 +57,7 @@ public class UserService {
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());
-        user.setCellPhone(dto.getCellPhone());
+        user.setBalance(dto.getBalance());
         user.setCellPhone(dto.getCellPhone());
 
         for (String string : dto.getRoles()) {

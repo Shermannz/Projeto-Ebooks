@@ -38,4 +38,13 @@ public class Ebook {
     @JoinTable(name = "tb_ebook_category", joinColumns = @JoinColumn(name = "ebook_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
+    public Ebook(Long id, String name, String author, String description, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.description = description;
+        this.price = price;
+    }
+
+    
 }

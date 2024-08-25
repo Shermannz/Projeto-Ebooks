@@ -2,8 +2,8 @@ package com.example.ebooks.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.ebooks.entities.Order;
 
@@ -18,15 +18,15 @@ public class OrderDto {
     private String status;
     private BigDecimal total;
 
-    private SimpleUserDto user;
+    private UserDto user;
 
-    private Set<EbookDto> ebooks = new HashSet<>();
+    private List<EbookDto> ebooks = new ArrayList<>();
 
     public OrderDto(Order order) {
         this.id = order.getId();
         this.date = order.getDate();
-        this.status = order.getStatus();
-        this.user = new SimpleUserDto(order.getUser());
+        this.status = order.getStatus().toString();
+        this.user = new UserDto(order.getUser());
         order.getEbooks().stream().map(x -> ebooks.add(new EbookDto(x))).toList();
         this.total = order.subTotal();
     }
