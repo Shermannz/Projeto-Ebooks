@@ -47,8 +47,7 @@ public class User {
     @JoinTable(name = "tb_user_ebook", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "ebook_id"))
     private Set<Ebook> ebooks = new HashSet<>();
 
-    public void saque(BigDecimal balance) {
+    public void withdraw(BigDecimal balance) {
         this.balance = this.balance.subtract(balance);
     }
-
 }

@@ -31,7 +31,7 @@ public class Ebook {
     private String description;
     private BigDecimal price;
 
-    @ManyToMany(mappedBy = "ebooks")
+    @ManyToMany
     private Set<User> users = new HashSet<>();
 
     @ManyToMany
@@ -46,5 +46,4 @@ public class Ebook {
         this.price = price;
     }
 
-    
 }

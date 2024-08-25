@@ -48,7 +48,7 @@ public class Order {
 
     public void pago() {
         if (status.equals(Status.PAGO) && !ebooks.isEmpty() && user.getBalance().compareTo(subTotal()) >= 0) {
-            user.saque(subTotal());
+            user.withdraw(subTotal());
             for (Ebook ebook : ebooks) {
                 user.getEbooks().add(ebook);
             }

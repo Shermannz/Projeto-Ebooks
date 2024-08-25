@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.ebooks.dto.EbookDto;
 import com.example.ebooks.dto.UserDto;
 import com.example.ebooks.services.UserService;
 
@@ -42,14 +43,25 @@ public class UserController {
         return ResponseEntity.created(uri).body(service.insert(dto));
     }
 
-    @PutMapping
+    @PostMapping("/publish/{id}")
+    ResponseEntity<EbookDto> publishEbook(@PathVariable Long id, @RequestBody EbookDto ebookDto) {
+        return ResponseEntity.ok(service.publishEBook(id, ebookDto));
+    }
+
+    @PutMapping("/{id}")
     ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody @Valid UserDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<UserDto> delete(@PathVariable Long id) {
+    ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/publish/{userId}/{ebookId}")
+    ResponseEntity<Void> removePublishedEbook(@PathVariable Long userId, @PathVariable Long ebookId) {
+        service.removePublishedEbook(userId, ebookId);
         return ResponseEntity.noContent().build();
     }
 
