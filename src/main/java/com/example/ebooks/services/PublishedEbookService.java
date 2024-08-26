@@ -24,7 +24,11 @@ public class PublishedEbookService {
     public EbookDto insert(Long Userid, EbookDto dto) {
         User user = repository.findById(Userid).orElseThrow(() -> new EntityNotFoundEbooks());
         Ebook ebook = new Ebook();
-        auxiliar(user, ebook, dto);
+        ebook.setName(dto.getName());
+        ebook.setAuthor(user.getName());
+        ebook.setDescription(dto.getDescription());
+        ebook.setPrice(dto.getPrice());
+        user.getEbooks().add(ebook);
         return new EbookDto(ebookRepository.save(ebook));
     }
 
@@ -33,19 +37,12 @@ public class PublishedEbookService {
         User user = repository.findById(userId).orElseThrow(() -> new EntityNotFoundEbooks());
         Ebook ebook = ebookRepository.findById(ebookId).orElseThrow(() -> new EntityNotFoundEbooks());
         if (user.getEbooks().contains(ebook)) {
-            auxiliar(user, ebook, dto);
+            ebook.setName(dto.getName());
+            ebook.setDescription(dto.getDescription());
+            ebook.setPrice(dto.getPrice());
             return new EbookDto(ebookRepository.save(ebook));
         } else
             throw new RuntimeException();
-    }
-
-    private void auxiliar(User user, Ebook ebook, EbookDto dto) {
-        ebook.setName(dto.getName());
-        ebook.setAuthor(user.getName());
-        ebook.setDescription(dto.getDescription());
-        ebook.setPrice(dto.getPrice());
-        user.getEbooks().add(ebook);
-
     }
 
     @Transactional
@@ -55,7 +52,7 @@ public class PublishedEbookService {
         if (user.getEbooks().contains(ebook) && ebook.getAuthor().equalsIgnoreCase(user.getName())) {
             user.getEbooks().remove(ebook);
             ebookRepository.deleteById(ebook.getId());
-        } 
+        }
     }
 
 }
