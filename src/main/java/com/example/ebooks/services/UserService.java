@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.ebooks.dto.EbookDto;
 import com.example.ebooks.dto.UserDto;
-import com.example.ebooks.entities.Ebook;
 import com.example.ebooks.entities.User;
-import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.RoleRepository;
 import com.example.ebooks.repositories.UserRepository;
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
@@ -23,8 +20,6 @@ public class UserService {
     private UserRepository repository;
     @Autowired
     private RoleRepository roleRepository;
-    @Autowired
-    private EbookRepository ebookRepository;
 
     @Transactional(readOnly = true)
     public UserDto findById(Long id) {
@@ -73,28 +68,6 @@ public class UserService {
     @Transactional
     public void delete(Long id) {
         repository.deleteById(id);
-    }
-
-    @Transactional
-    public EbookDto publishEBook(Long Userid, EbookDto ebookPublish) {
-        User user = repository.findById(Userid).get();
-        Ebook ebook = new Ebook();
-        ebook.setName(ebookPublish.getName());
-        ebook.setAuthor(user.getName());
-        ebook.setDescription(ebookPublish.getDescription());
-        ebook.setPrice(ebookPublish.getPrice());
-        user.getEbooks().add(ebook);
-        return new EbookDto(ebookRepository.save(ebook));
-    }
-
-    @Transactional
-    public void removePublishedEbook(Long userId, Long ebookId) {
-        User user = repository.findById(userId).get();
-        Ebook ebook = ebookRepository.findById(ebookId).get();
-        if (user.getEbooks().contains(ebook) && ebook.getAuthor().equalsIgnoreCase(user.getName())) {
-            user.getEbooks().remove(ebook);
-            ebookRepository.deleteById(ebook.getId());
-        }
     }
 
 }
