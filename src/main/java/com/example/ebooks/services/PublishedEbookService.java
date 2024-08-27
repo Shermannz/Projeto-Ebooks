@@ -49,7 +49,9 @@ public class PublishedEbookService {
     public void delete(Long userId, Long ebookId) {
         User user = repository.findById(userId).orElseThrow(() -> new EntityNotFoundEbooks());
         Ebook ebook = ebookRepository.findById(ebookId).orElseThrow(() -> new EntityNotFoundEbooks());
-        if (user.getEbooks().contains(ebook) && ebook.getAuthor().equalsIgnoreCase(user.getName())) {
+        if (!user.getEbooks().contains(ebook) && !ebook.getAuthor().equalsIgnoreCase(user.getName())) {
+            throw new EntityNotFoundEbooks();
+        } else {
             user.getEbooks().remove(ebook);
             ebookRepository.deleteById(ebook.getId());
         }

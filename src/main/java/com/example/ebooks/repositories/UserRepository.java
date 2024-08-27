@@ -15,4 +15,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "JOIN FETCH obj.ebooks")
     List<User> findAllUsers();
 
+    User findByName(String name);
+
 }

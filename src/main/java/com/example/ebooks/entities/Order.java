@@ -46,15 +46,6 @@ public class Order {
         this.user = user;
     }
 
-    public void pago() {
-        if (status.equals(Status.PAGO) && !ebooks.isEmpty() && user.getBalance().compareTo(subTotal()) >= 0) {
-            user.withdraw(subTotal());
-            for (Ebook ebook : ebooks) {
-                user.getEbooks().add(ebook);
-            }
-        } else
-            throw new RuntimeException();
-    }
 
     public BigDecimal subTotal() {
         BigDecimal total = BigDecimal.ZERO;

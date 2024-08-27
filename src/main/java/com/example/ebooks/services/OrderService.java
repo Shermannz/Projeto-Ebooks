@@ -57,8 +57,27 @@ public class OrderService {
     public OrderDto updateToPaid(Long id) {
         Order order = repository.findByIdCustom(id).orElseThrow(() -> new EntityNotFoundEbooks());
         order.setStatus(Status.PAGO);
-        order.pago();
+
+        if (order.getStatus().equals(Status.PAGO) && !order.getEbooks().isEmpty()
+                && order.getUser().getBalance().compareTo(order.subTotal()) >= 0) {
+                    
+            order.getUser().withdraw(order.subTotal());
+
+            for (Ebook ebook : order.getEbooks()) {
+                order.getUser().getEbooks().add(ebook);
+            }
+            for (Ebook ebook : order.getEbooks()) {
+                User user = userRepository.findByName(ebook.getAuthor());
+                if (ebook.getAuthor().equalsIgnoreCase(user.getName())) {
+                    user.deposit(ebook.getPrice());
+                }
+            }
+
+        } else
+        // TODO trocar por exceção personalizada
+            throw new EntityNotFoundEbooks();
         return new OrderDto(repository.save(order));
+
     }
 
     @Transactional

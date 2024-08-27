@@ -1,6 +1,6 @@
 INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('fulano', 'fulano@gmail.com',1112.0, '123456789', 'abcdefg123');
-INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('ciclano', 'ciclano@gmail.com',2.0, '987654321', 'defghj123');
-INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('beltrano', 'beltrano@gmail.com',2.0, '123459876', 'asdbcs123');
+INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('ciclano', 'ciclano@gmail.com',200.0, '987654321', 'defghj123');
+INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('beltrano', 'beltrano@gmail.com',200.0, '123459876', 'asdbcs123');
 
 INSERT INTO tb_role (authority) VALUES ('Admin');
 INSERT INTO tb_role (authority) VALUES ('Cliente');

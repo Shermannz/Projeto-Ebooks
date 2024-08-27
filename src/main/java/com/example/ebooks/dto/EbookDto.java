@@ -3,6 +3,7 @@ package com.example.ebooks.dto;
 import java.math.BigDecimal;
 
 import com.example.ebooks.entities.Ebook;
+import com.example.ebooks.entities.User;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class EbookDto {
     private String author;
     @NotBlank(message = "A descrição não pode ser vazia")
     private String description;
+    private Long sold = 0L;
     @NotBlank(message = "O preço não pode ser vazio")
     private BigDecimal price;
 
@@ -28,6 +30,11 @@ public class EbookDto {
         this.name = ebook.getName();
         this.author = ebook.getAuthor();
         this.description = ebook.getDescription();
+        for (User user : ebook.getUsers()) {
+            if (!user.getName().equalsIgnoreCase(author)) {
+                this.sold += 1;
+            }
+        }
         this.price = ebook.getPrice();
     }
 
