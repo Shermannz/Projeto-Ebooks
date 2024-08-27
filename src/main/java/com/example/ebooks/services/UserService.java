@@ -36,7 +36,7 @@ public class UserService {
     @Transactional
     public UserDto insert(UserDto dto) {
         User user = new User();
-        auxiliar(user, dto);
+        auxiliary(user, dto);
 
         return new UserDto(repository.save(user));
     }
@@ -45,7 +45,7 @@ public class UserService {
     public UserDto update(Long id, UserDto dto) {
         try {
             User user = repository.findById(id).get();
-            auxiliar(user, dto);
+            auxiliary(user, dto);
             return new UserDto(repository.save(user));
 
         } catch (EntityNotFoundException e) {
@@ -53,7 +53,7 @@ public class UserService {
         }
     }
 
-    private void auxiliar(User user, UserDto dto) {
+    private void auxiliary(User user, UserDto dto) {
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
         user.setPassword(dto.getPassword());

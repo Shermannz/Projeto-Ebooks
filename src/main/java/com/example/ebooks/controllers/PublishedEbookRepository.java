@@ -1,8 +1,11 @@
 package com.example.ebooks.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,15 +22,15 @@ public class PublishedEbookRepository {
     @Autowired
     private PublishedEbookService service;
 
-    // @GetMapping("/{id}")
-    // ResponseEntity<UserDto> findById(@PathVariable Long id) {
-    // return ResponseEntity.ok(service.findById(id));
-    // }
+    @GetMapping("/{userId}/{ebookId}")
+    ResponseEntity<EbookDto> findById(@PathVariable Long userId, @PathVariable Long ebookId) {
+        return ResponseEntity.ok(service.findById(userId, ebookId));
+    }
 
-    // @GetMapping
-    // ResponseEntity<List<UserDto>> findAll() {
-    // return ResponseEntity.ok(service.findAll());
-    // }
+    @GetMapping("/{userId}")
+    ResponseEntity<List<EbookDto>> findAll(@PathVariable Long userId) {
+        return ResponseEntity.ok(service.findAll(userId));
+    }
 
     @PostMapping("/{id}")
     ResponseEntity<EbookDto> insert(@PathVariable Long id, @RequestBody EbookDto ebookDto) {

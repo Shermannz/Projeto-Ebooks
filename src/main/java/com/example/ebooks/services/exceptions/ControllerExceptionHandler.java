@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
+import com.example.ebooks.services.exceptions.CustomExceptions.NotAuthorizedCustom;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -17,8 +18,16 @@ import jakarta.servlet.http.HttpServletRequest;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundEbooks.class)
-    public ResponseEntity<CustomError> notfound(EntityNotFoundEbooks entity, HttpServletRequest request) {
+    public ResponseEntity<CustomError> notFound(EntityNotFoundEbooks entity, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
+        CustomError errorBase = new CustomError(LocalDateTime.now(), status.value(), entity.getMessage(),
+                request.getRequestURI());
+        return ResponseEntity.status(status).body(errorBase);
+    }
+
+    @ExceptionHandler(NotAuthorizedCustom.class)
+    public ResponseEntity<CustomError> notAuthorized(NotAuthorizedCustom entity, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         CustomError errorBase = new CustomError(LocalDateTime.now(), status.value(), entity.getMessage(),
                 request.getRequestURI());
         return ResponseEntity.status(status).body(errorBase);
