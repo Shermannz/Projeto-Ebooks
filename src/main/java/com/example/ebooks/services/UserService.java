@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ebooks.dto.SimpleUserDto;
 import com.example.ebooks.dto.UserDto;
 import com.example.ebooks.entities.User;
 import com.example.ebooks.repositories.RoleRepository;
@@ -28,9 +29,9 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public List<UserDto> findAll() {
+    public List<SimpleUserDto> findAll() {
         List<User> user = repository.findAll();
-        return user.stream().map(UserDto::new).toList();
+        return user.stream().map(SimpleUserDto::new).toList();
     }
 
     @Transactional

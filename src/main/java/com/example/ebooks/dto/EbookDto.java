@@ -1,6 +1,8 @@
 package com.example.ebooks.dto;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.ebooks.entities.Ebook;
 import com.example.ebooks.entities.User;
@@ -24,6 +26,7 @@ public class EbookDto {
     private Long sold = 0L;
     @NotBlank(message = "O preço não pode ser vazio")
     private BigDecimal price;
+    private List<CategoryDto> categories = new ArrayList<>();
 
     public EbookDto(Ebook ebook) {
         this.id = ebook.getId();
@@ -36,6 +39,6 @@ public class EbookDto {
             }
         }
         this.price = ebook.getPrice();
+        ebook.getCategories().forEach(x -> categories.add(new CategoryDto(x)));
     }
-
 }

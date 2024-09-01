@@ -15,36 +15,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.ebooks.dto.SimpleUserDto;
-import com.example.ebooks.dto.UserDto;
-import com.example.ebooks.services.UserService;
+import com.example.ebooks.dto.CategoryDto;
+import com.example.ebooks.services.CategoryService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/categories")
+public class CategoryController {
     @Autowired
-    private UserService service;
+    private CategoryService service;
 
     @GetMapping("/{id}")
-    ResponseEntity<UserDto> findById(@PathVariable Long id) {
+    ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
     @GetMapping
-    ResponseEntity<List<SimpleUserDto>> findAll() {
+    ResponseEntity<List<CategoryDto>> findAll() {
         return ResponseEntity.ok(service.findAll());
     }
 
     @PostMapping
-    ResponseEntity<UserDto> insert(@RequestBody @Valid UserDto dto) {
+    ResponseEntity<CategoryDto> insert(@RequestBody @Valid CategoryDto dto) {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(service.insert(dto));
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody @Valid UserDto dto) {
+    ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody @Valid CategoryDto dto) {
         return ResponseEntity.ok(service.update(id, dto));
     }
 
