@@ -18,7 +18,7 @@ public class OrderDto {
     private String status;
     private BigDecimal total;
 
-    private UserDto user;
+    private SimpleUserDto user;
 
     private List<EbookDto> ebooks = new ArrayList<>();
 
@@ -26,7 +26,7 @@ public class OrderDto {
         this.id = order.getId();
         this.date = order.getDate();
         this.status = order.getStatus().toString();
-        this.user = new UserDto(order.getUser());
+        this.user = new SimpleUserDto(order.getUser());
         order.getEbooks().stream().map(x -> ebooks.add(new EbookDto(x))).toList();
         this.total = order.subTotal();
     }
