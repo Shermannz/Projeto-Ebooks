@@ -1,7 +1,5 @@
 package com.example.ebooks.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,14 +20,9 @@ public class PublishedEbookRepository {
     @Autowired
     private PublishedEbookService service;
 
-    @GetMapping("/{userId}/{ebookId}")
-    ResponseEntity<EbookDto> findById(@PathVariable Long userId, @PathVariable Long ebookId) {
-        return ResponseEntity.ok(service.findById(userId, ebookId));
-    }
-
-    @GetMapping("/{userId}")
-    ResponseEntity<List<EbookDto>> findAll(@PathVariable Long userId) {
-        return ResponseEntity.ok(service.findAll(userId));
+    @GetMapping("/{ebookId}")
+    ResponseEntity<EbookDto> findById(@PathVariable Long ebookId) {
+        return ResponseEntity.ok(service.findById(ebookId));
     }
 
     @PostMapping("/{id}")
