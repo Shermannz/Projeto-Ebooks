@@ -2,6 +2,8 @@ package com.example.ebooks.services;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +12,6 @@ import com.example.ebooks.dto.CategoryDto;
 import com.example.ebooks.entities.Category;
 import com.example.ebooks.repositories.CategoryRepository;
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CategoryService {

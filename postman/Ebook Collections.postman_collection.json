@@ -40,6 +40,16 @@
 				{
 					"name": "Insert Copy",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -320,6 +330,61 @@
 					"response": []
 				},
 				{
+					"name": "findById Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/products/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"products",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "findAll",
 					"request": {
 						"method": "GET",
@@ -398,6 +463,196 @@
 			]
 		},
 		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "findById",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "insert",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjYyNTk3NzksInVzZXJfbmFtZSI6ImZ1bGFub0BnbWFpbC5jb20iLCJhdXRob3JpdGllcyI6WyJPUEVSQVRPUiIsIlZpc2l0YW50ZSIsIkFETUlOIl0sImp0aSI6IjdmNjUxOTkwLTk2YjItNGQ0ZS1hMDZhLWUzNDI2NWNjMzVhNSIsImNsaWVudF9pZCI6Im15Y2xpZW50aWQiLCJzY29wZSI6WyJyZWFkIiwid3JpdGUiXX0.VdHLJSgQKtVLrgXE6Y9qzDBehBA86tZnciNR6rIP060",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "     {\r\n            \"name\": \"a\",\r\n            \"email\" : \"a\",\r\n            \"cellPhone\" : \"a\",\r\n            \"balance\" : 2000,\r\n            \"password\" : \"123456\",\r\n            \"roles\" : \r\n            [\r\n                \"ADMIN\"\r\n            ],\r\n            \"ebooks\" : [{\"id\": 1}]\r\n        }\r\n\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "myclientsecret",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "myclientid",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "fulano@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/oauth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"oauth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "     {\r\n            \"name\": \"a\",\r\n            \"email\" : \"a\",\r\n            \"cellPhone\" : \"a\",\r\n            \"balance\" : 2000,\r\n            \"password\" : \"a\",\r\n            \"roles\" : \r\n            [\r\n                \"Admin\"\r\n            ],\r\n            \"ebooks\" : [{\"id\": 1}]\r\n        }\r\n\r\n    ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "PublishedEbooks",
 			"item": [
 				{
@@ -415,15 +670,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/publish/1",
+							"raw": "http://localhost:8080/publish",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"publish",
-								"1"
+								"publish"
 							]
 						}
 					},
@@ -432,6 +686,16 @@
 				{
 					"name": "update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -444,7 +708,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/publish/1/4",
+							"raw": "http://localhost:8080/publish/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -452,7 +716,6 @@
 							"port": "8080",
 							"path": [
 								"publish",
-								"1",
 								"4"
 							]
 						}
@@ -512,10 +775,20 @@
 				{
 					"name": "findById",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/publish/1/4",
+							"raw": "http://localhost:8080/publish/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -523,8 +796,7 @@
 							"port": "8080",
 							"path": [
 								"publish",
-								"1",
-								"4"
+								"1"
 							]
 						}
 					},

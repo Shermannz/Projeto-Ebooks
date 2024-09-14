@@ -22,30 +22,29 @@ public class PublishedEbookRepository {
     @Autowired
     private PublishedEbookService service;
 
-    @GetMapping("/{userId}/{ebookId}")
-    ResponseEntity<EbookDto> findById(@PathVariable Long userId, @PathVariable Long ebookId) {
-        return ResponseEntity.ok(service.findById(userId, ebookId));
+    @GetMapping("/{ebookId}")
+    ResponseEntity<EbookDto> findById(@PathVariable Long ebookId) {
+        return ResponseEntity.ok(service.findById(ebookId));
     }
 
-    @GetMapping("/{userId}")
-    ResponseEntity<List<EbookDto>> findAll(@PathVariable Long userId) {
-        return ResponseEntity.ok(service.findAll(userId));
+    @GetMapping
+    ResponseEntity<List<EbookDto>> findAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
-    @PostMapping("/{id}")
-    ResponseEntity<EbookDto> insert(@PathVariable Long id, @RequestBody EbookDto ebookDto) {
-        return ResponseEntity.ok(service.insert(id, ebookDto));
+    @PostMapping
+    ResponseEntity<EbookDto> insert(@RequestBody EbookDto ebookDto) {
+        return ResponseEntity.ok(service.insert(ebookDto));
     }
 
-    @PutMapping("/{userId}/{ebookId}")
-    ResponseEntity<EbookDto> update(@PathVariable Long userId, @PathVariable Long ebookId,
-            @RequestBody EbookDto ebookDto) {
-        return ResponseEntity.ok(service.update(userId, ebookId, ebookDto));
+    @PutMapping("/{ebookId}")
+    ResponseEntity<EbookDto> update(@PathVariable Long ebookId, @RequestBody EbookDto ebookDto) {
+        return ResponseEntity.ok(service.update(ebookId, ebookDto));
     }
 
-    @DeleteMapping("/{userId}/{ebookId}")
-    ResponseEntity<Void> delete(@PathVariable Long userId, @PathVariable Long ebookId) {
-        service.delete(userId, ebookId);
+    @DeleteMapping("/{ebookId}")
+    ResponseEntity<Void> delete(@PathVariable Long ebookId) {
+        service.delete(ebookId);
         return ResponseEntity.noContent().build();
     }
 

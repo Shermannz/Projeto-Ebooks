@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,9 +26,9 @@ public class PublishedEbookService {
     private EbookRepository ebookRepository;
 
     @Transactional(readOnly = true)
-    public EbookDto findById(Long userId, Long ebookId) {
-        User user = repository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundEbooks());
+    public EbookDto findById(Long ebookId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = repository.findByEmail(username);
         Ebook ebook = ebookRepository.findById(ebookId)
                 .orElseThrow(() -> new EntityNotFoundEbooks("Livro nao encontrado"));
 
@@ -40,8 +41,9 @@ public class PublishedEbookService {
     }
 
     @Transactional(readOnly = true)
-    public List<EbookDto> findAll(Long userId) {
-        User user = repository.findById(userId).get();
+    public List<EbookDto> findAll() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = repository.findByEmail(username);
         List<EbookDto> dto = new ArrayList<>();
 
         for (Ebook ebook : user.getEbooks()) {
@@ -53,9 +55,9 @@ public class PublishedEbookService {
     }
 
     @Transactional
-    public EbookDto insert(Long userid, EbookDto dto) {
-        User user = repository.findById(userid)
-                .orElseThrow(() -> new EntityNotFoundEbooks());
+    public EbookDto insert(EbookDto dto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = repository.findByEmail(username);
 
         Ebook ebook = new Ebook();
         auxiliary(ebook, dto);
@@ -65,9 +67,9 @@ public class PublishedEbookService {
     }
 
     @Transactional
-    public EbookDto update(Long userId, Long ebookId, EbookDto dto) {
-        User user = repository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundEbooks());
+    public EbookDto update(Long ebookId, EbookDto dto) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = repository.findByEmail(username);
         Ebook ebook = ebookRepository.findById(ebookId)
                 .orElseThrow(() -> new EntityNotFoundEbooks("Livro nao encontrado"));
 
@@ -86,9 +88,10 @@ public class PublishedEbookService {
     }
 
     @Transactional
-    public void delete(Long userId, Long ebookId) {
-        User user = repository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundEbooks());
+    public void delete(Long ebookId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        User user = repository.findByEmail(username);
         Ebook ebook = ebookRepository.findById(ebookId)
                 .orElseThrow(() -> new EntityNotFoundEbooks("Livro nao encontrado"));
 

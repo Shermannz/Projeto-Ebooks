@@ -3,6 +3,8 @@ package com.example.ebooks.controllers;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.ebooks.dto.SimpleUserDto;
 import com.example.ebooks.dto.UserDto;
 import com.example.ebooks.services.UserService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
