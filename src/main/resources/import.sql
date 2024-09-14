@@ -1,16 +1,8 @@
-<<<<<<< HEAD
 INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('fulano', 'fulano@gmail.com',1112.0, '19999920202', '$2a$12$6r/MeMm6iYd5Rf1IwNLBx.NgUGbFJINiAswaClC4OPpNoubWGE9nq');
 INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('ciclano', 'ciclano@gmail.com',200.0, '987654321', 'defghj123');
 INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('beltrano', 'beltrano@gmail.com',200.0, '123459876', 'asdbcs123');
 INSERT INTO tb_role (authority) VALUES ('ADMIN');
 INSERT INTO tb_role (authority) VALUES ('OPERATOR');
-=======
-INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('fulano', 'fulano@gmail.com',1112.0, '123456789', '$2a$12$OFB2y0VNPhCa9i3w2qeQm.d2ABYkKz0KSJolGbqmDFwj8OfRsrKAu');
-INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('ciclano', 'ciclano@gmail.com',200.0, '987654321', 'defghj123');
-INSERT INTO tb_user (name, email, balance, cell_phone, password) VALUES ('beltrano', 'beltrano@gmail.com',200.0, '123459876', 'asdbcs123');
-INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN');
-INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
 INSERT INTO tb_role (authority) VALUES ('Visitante');
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1,1);
@@ -45,14 +37,11 @@ INSERT INTO tb_order_ebook (order_id, ebook_id) VALUES (1L, 2L);
 INSERT INTO tb_order_ebook (order_id, ebook_id) VALUES (1L, 3L);
 
 
-<<<<<<< HEAD
 -- INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (1L, 1L);
 -- INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (1L, 2L);
 -- INSERT INTO tb_user_ebook (user_id, ebook_id) VALUES (1L, 3L);
 
 
-=======
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
 INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (1L, 1L);
 INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (1L, 2L);
 INSERT INTO tb_ebook_category (ebook_id, category_id) VALUES (2L, 2L);
