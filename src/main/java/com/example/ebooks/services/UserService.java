@@ -5,7 +5,10 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.security.access.prepost.PreAuthorize;
+=======
+>>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,7 +17,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ebooks.dto.SimpleUserDto;
 import com.example.ebooks.dto.UserDto;
+import com.example.ebooks.entities.Role;
 import com.example.ebooks.entities.User;
+import com.example.ebooks.entities.projections.UserDetailsProjection;
 import com.example.ebooks.repositories.RoleRepository;
 import com.example.ebooks.repositories.UserRepository;
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
@@ -80,11 +85,26 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+<<<<<<< HEAD
         User user = repository.findByEmail(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
         return user;
+=======
+        List<UserDetailsProjection> result = repository.findByEmailCustom(username);
+        if (result.isEmpty()) {
+            throw new UsernameNotFoundException("Usuario nao encontrado");
+        } else {
+            User user = new User();
+            user.setEmail(username);
+            user.setPassword(result.get(0).getPassword());
+            for (UserDetailsProjection projection : result) {
+                user.getRoles().add(new Role(projection.getRoleId(), projection.getAuthority()));
+            }
+            return user;
+        }
+>>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
     }
 
 }
