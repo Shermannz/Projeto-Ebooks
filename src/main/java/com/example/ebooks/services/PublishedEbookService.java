@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ebooks.dto.EbookDto;
 import com.example.ebooks.entities.Ebook;
 import com.example.ebooks.entities.User;
-import com.example.ebooks.entities.projections.UserDetailsProjection;
 import com.example.ebooks.repositories.EbookRepository;
 import com.example.ebooks.repositories.UserRepository;
 import com.example.ebooks.services.exceptions.CustomExceptions.EntityNotFoundEbooks;
@@ -32,23 +27,8 @@ public class PublishedEbookService {
 
     @Transactional(readOnly = true)
     public EbookDto findById(Long ebookId) {
-<<<<<<< HEAD
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = repository.findByEmail(username);
-=======
-        String email = "";
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetailsProjection) {
-            UserDetailsProjection userDetails = (UserDetailsProjection) authentication.getPrincipal();
-            email = userDetails.getUsername();
-            System.out.println("Email: " + email); // Log para verificar o email
-        }
-        User user = repository.findByEmail(email);
-        System.out.println("User: " + user); // Log para verificar o usuário
-        if (user == null) {
-            throw new EntityNotFoundEbooks("Usuário não encontrado");
-        }
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
         Ebook ebook = ebookRepository.findById(ebookId)
                 .orElseThrow(() -> new EntityNotFoundEbooks("Livro não encontrado"));
     

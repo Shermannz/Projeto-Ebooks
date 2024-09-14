@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-<<<<<<< HEAD
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,20 +18,6 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-=======
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,11 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-<<<<<<< HEAD
 public class User implements UserDetails {
-=======
-public class User implements UserDetails{
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -116,20 +97,12 @@ public class User implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-<<<<<<< HEAD
         return roles;
-=======
-        return getRoles();
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
     }
 
     @Override
     public String getUsername() {
-<<<<<<< HEAD
         return email;
-=======
-        return getEmail();
->>>>>>> b18bffc9e8ad3765b702c3252213518bfc740602
     }
 
     @Override
